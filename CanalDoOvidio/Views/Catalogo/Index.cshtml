@@ -4,14 +4,11 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Bem vindo ao nosso catalogo!</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<div class="row">      
+<div class="row">
     @foreach (var item in Model)
-    {              
+    {
         <div class="col-sm-6 col-md-4">
             <div class="thumbnail">
                 <img src="@item.Imagem" alt="@item.Titulo">
@@ -23,7 +20,8 @@
                     <p><a href="/Filme/Exibir/@item.Titulo" class="btn btn-primary" role="button">Assitir</a> <a href="#" class="btn btn-default" role="button">Detalhe</a></p>
                 </div>
             </div>
-        </div>      
+        </div>
     }
-</div>
+</div>      
+
 

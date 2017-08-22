@@ -30,7 +30,7 @@ namespace CanalDoOvidio.Controllers
                 Session[$"user.{model.Email}"] = model;
 
 
-                return RedirectToAction("Index", "Catologo");
+                return RedirectToAction("Index", "Catalogo");
             }
 
             return View();
@@ -39,27 +39,30 @@ namespace CanalDoOvidio.Controllers
         [AllowAnonymous]
         public ActionResult Login()
         {
+            if (Request.IsAjaxRequest())
+                return PartialView();
+
             return View();
         }
 
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult Login(Login model, string ulr)
+        public ActionResult Login(Login model, string url)
         {
             var usuario = Session[$"user.{model.Email}"] as Usuario;
 
-            if (usuario == null && usuario.Senha != model.Senha)
+            if (usuario == null || usuario.Senha != model.Senha)
             {
-                return View();
+                return PartialView();
             }
 
 
             FormsAuthentication.SetAuthCookie(model.Email, true);
 
-            if (!string.IsNullOrEmpty(ulr))
-                return RedirectToAction(ulr);
-            return RedirectToAction("Index", "Catalogo");
-
+            if (!string.IsNullOrEmpty(url))
+                return RedirectToAction(url);
+            else
+                return RedirectToAction("Index", "Catalogo");
         }
     }
 }
